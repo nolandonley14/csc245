@@ -1,0 +1,636 @@
+Script started on Thu Sep 19 23:06:54 2019
+[?1034hbash-3.2$ cat MoveFront.cpp
+#include <iostream>
+using namespace std;
+#include "dlist.h"
+
+char PrintMenu();
+void HeadInsert(DList<int> &list);
+void TailInsert(DList<int> &list);
+void PrintList(const DList<int> &list);
+void PrintLength(const DList<int> &list);
+void AccessItem(DList<int> &list);
+void Delete(DList<int> &list);
+void FindAndMove(DList<int> &list, int num);
+void Find(const DList<int> &list);
+void SortList(DList<int> &list);
+char addDuplicate();
+
+int main() {
+
+    DList<int> list;
+    char selection;
+
+    do
+    {
+        selection = PrintMenu();
+        switch (toupper(selection))
+        {
+            case 'H' : HeadInsert(list); break;
+            case 'T' : TailInsert(list); break;
+            case 'F' : Find(list); break;
+            case 'P' : PrintList(list); break;
+            case 'A' : AccessItem(list); break;
+            case 'D' : Delete(list); break;
+            case 'L' : PrintLength(list); break;
+            case 'S' : SortList(list); break;
+            case 'Q' : cout << "\tExiting Program...\n"; break;
+            default : cout << "\tError. Try again." << endl;
+        }
+    } while (toupper(selection) != 'Q');
+
+}
+
+char PrintMenu() {
+    char sel;
+    cout << endl;
+    cout << "\tEnter 'H' for insert head, \n";
+    cout << "\tEnter 'T' for insert tail, \n";
+    cout << "\tEnter 'P' for print list, \n";
+    cout << "\tEnter 'L' for print length, \n";
+    cout << "\tEnter 'A' for access item, \n";
+    cout << "\tEnter 'D' for erase list, \n";
+    cout << "\tEnter 'F' to look for an item, \n";
+    cout << "\tEnter 'S' to sort the list, \n";
+    cout << "\tEnter 'Q' to quit the program: \t";
+    cin >> sel;
+    return sel;
+}
+
+void HeadInsert(DList<int> &list) {
+    int variable;
+    char answer;
+    cout << "\nEnter value to insert: ";
+    cin >> variable;
+    if (list.inList(variable)) {
+        do
+        {
+            answer = addDuplicate();
+            switch (toupper(answer))
+            {
+                case 'Y' : list.insertHead(variable); break;
+                case 'N' : cout << "\tThe item will not be inserted.\n" << endl; break;
+                default : cout << "\tPlease enter Y or N." << endl;
+            }
+        } while (toupper(answer) != 'Y' && toupper(answer) != 'N');
+    }
+    else {
+        list.insertHead(variable);
+    }
+}
+
+char addDuplicate() {
+    char ans;
+    cout << ans;
+    cout << "\nThis item is already in the list. Would you like to add a duplicate? (Y/N): ";
+    cin >> ans;
+    return ans;
+}
+
+void TailInsert(DList<int> &list) {
+    int variable;
+    char answer;
+    cout << "\nEnter value to insert: ";
+    cin >> variable;
+    if (list.inList(variable)) {
+        do
+        {
+            answer = addDuplicate();
+            switch (toupper(answer))
+            {
+                case 'Y' : list.appendTail(variable); break;
+                case 'N' : cout << "\tThe item will not be inserted.\n" << endl; break;
+                default : cout << "\tPlease enter Y or N." << endl;
+            }
+        } while (toupper(answer) != 'Y' && toupper(answer) != 'N');
+    }
+    else {
+        list.appendTail(variable);
+    }
+}
+
+void PrintList(const DList<int> &list) {
+    if (list.isEmpty()) {
+        cout << "\nThe list is empty. \n";
+        return;
+    }
+    list.print();
+}
+
+void PrintLength(const DList<int> &list) {
+    cout << list.lengthIs() << endl;
+}
+
+void AccessItem(DList<int> &list) {
+    int variable;
+    if (list.isEmpty()) {
+        cout << "\nThe list is empty. \n";
+        return;
+    }
+    cout << "\nEnter value to access: ";
+    cin >> variable;
+    FindAndMove(list, variable);
+
+}
+
+void Delete(DList<int> &list) {
+    int variable;
+    if (list.isEmpty()) {
+        cout << "\nThe list is empty. \n";
+        return;
+    }
+    cout << "\nEnter value to delete: ";
+    cin >> variable;
+    if (list.inList(variable)){
+        list.deleteItem(variable);
+    }
+    else {
+        cout << "\nThe value you want to delete is not in the list.\n";
+    }
+}
+
+void Find(const DList<int> &list) {
+    int variable;
+    cout << "\nEnter value to find: ";
+    cin >> variable;
+    if (list.inList(variable)) {
+        cout << "\n" << variable << " has been found.\n" << endl;
+    }
+    else {
+        cout << "\n" << variable << " has not been found.\n" << endl;
+    }
+
+}
+
+void FindAndMove(DList<int> &list, int num) {
+    if (list.inList(num)) {
+        list.deleteItem(num);
+        list.insertHead(num);
+        cout << "\n" << num << " has been found, and is now the head of the list.\n" << endl;
+    }
+    else {
+        cout << "\n" << num << " is not in the list.\n" << endl;
+    }
+}
+
+void SortList(DList<int> &list) {
+    for (int i=0; i < list.lengthIs(); i++)
+    {
+        int num = list.Least(i);
+        list.deleteItem(num);
+        list.insertHead(num);
+    }
+    list.reverseList();
+    cout << "\nThe list has been sorted\n";
+}
+bash-3.2$ cat dlist.h
+
+using namespace std;
+
+template <class ItemType>
+struct NodeType;
+
+template <class ItemType>
+class DList
+{
+public :
+    DList();		// Constructor
+    ~DList();  	// Destructor
+
+    // Public Operations
+
+    void makeEmpty();
+    void deleteItem(ItemType item);
+    bool inList(ItemType item) const;
+    bool isEmpty () const;
+    void print() const;
+    void insertHead (ItemType item);
+    void appendTail (ItemType item);
+    void reverseList();
+    int lengthIs() const;
+    int Least(int start);
+
+private :
+    // Private Attributes of a DList Object
+    NodeType<ItemType>* head;
+    int length;
+
+    // Functions Called Solely By Public Functions, Not The Client
+    NodeType<ItemType>* location(ItemType item) const;
+    NodeType<ItemType>* last() const;
+    void deleteLocation (NodeType<ItemType>* delPtr);
+};
+
+#include "dlist.cpp"
+bash-3.2$ cat dlist.cpp
+#include <cstddef>
+#include <iostream>
+
+using namespace std;
+
+template<class ItemType>
+struct NodeType
+{
+	ItemType info;
+	NodeType<ItemType>*	next;
+	NodeType<ItemType>*	back;
+};
+
+template <class ItemType>
+DList<ItemType>::DList()		// Class constructor
+{
+    length = 0;
+    head = NULL;
+}
+
+template <class ItemType>
+DList<ItemType>::~DList()
+{
+	// Post: List is empty; All items have been deallocated.
+	makeEmpty();
+}
+
+template <class ItemType>
+void DList<ItemType>::makeEmpty()
+{
+    // Post: List is empty; all items have been deallocated.
+	NodeType<ItemType> *temp = head;
+	while(temp != NULL)
+	{
+		deleteItem(temp -> info);
+		temp = temp -> next;
+	}
+	length = 0;
+}
+
+template <class ItemType>
+void DList<ItemType>::reverseList()
+{
+    // Post: List is empty; all items have been deallocated.
+	NodeType<ItemType> *temp = head;
+	NodeType<ItemType> *temp2 = NULL;
+
+    while(temp != NULL) {
+		temp2 = temp -> back;
+		temp -> back = temp -> next;
+		temp -> next = temp2;
+		temp = temp -> back;
+	}
+	if (temp2 != NULL)
+	{
+		temp2 = temp2 -> back;
+		head = temp2;
+	}
+}
+
+template <class ItemType>
+void DList<ItemType>::deleteItem (ItemType item)
+{
+	//  Pre :  item to be deleted is passed in via parameter
+	NodeType<ItemType> *temp = head;
+	// Pre  : List is not
+	while(temp != NULL)
+	{
+		if (temp -> info == item) {
+			if (temp == head) {
+				head = temp -> next;
+			}
+			if (temp -> next != NULL) {
+				temp -> next -> back = temp -> back;
+			}
+			if (temp -> back != NULL) {
+				temp -> back -> next = temp -> next;
+			}
+			if (temp -> next == NULL && temp -> back == NULL)
+			{
+				head = NULL;
+			}
+			delete temp;
+			length--;
+			break;
+		}
+		else
+		{
+			temp = temp -> next;
+		}
+	}
+        // Post :  item is deleted if it exists in list
+}
+
+template <class ItemType>
+bool DList<ItemType>::inList (ItemType item) const
+{
+	//  Pre :  item to be located is passed in via parameter
+	NodeType<ItemType> *temp = head;
+	// Pre  : List is not
+	while(temp != NULL)
+	{
+		if (temp -> info == item) {
+			return true;
+		}
+		else
+		{
+			temp = temp -> next;
+		}
+	}
+	return false;
+        // Post :  function returns bool value if item is found
+}
+
+template <class ItemType>
+bool DList<ItemType>::isEmpty() const
+{
+	// Post : function returns true if list is empty, false otherwise
+	return head == NULL;
+}
+
+template <class ItemType>
+void DList<ItemType>::print() const
+{
+	NodeType<ItemType> *temp = head;
+	// Pre  : List is not
+	if (temp == NULL) {
+		return;
+	}
+	else {
+		while(temp != NULL)
+		{
+			cout << temp -> info << endl;
+			temp = temp -> next;
+		}
+	}
+	// Post : Items in List have been printed to screen
+}
+
+template <class ItemType>
+void DList<ItemType>::insertHead(ItemType item)
+{
+	//  Pre : item to be inserted is passed in via parameter
+	NodeType<ItemType> *newNode = new NodeType<ItemType>;
+	newNode -> info = item;
+	newNode -> back = NULL;
+	if (head == NULL) {
+		newNode -> next = NULL;
+	}
+	else {
+		head -> back = newNode;
+		newNode -> next = head;
+	}
+	head = newNode;
+	length++;
+        // Post : item is inserted at head of list;  Former first node is
+        //        linked back to this new one via double link;
+        //        Length incremented;  Special case handled if list is empty
+}
+
+template <class ItemType>
+void DList<ItemType>::appendTail(ItemType item)
+{
+	//  Pre :  item to be inserted is passed in via parameter
+	NodeType<ItemType> *newNode = new NodeType<ItemType>;
+	newNode -> info = item;
+	newNode -> next = NULL;
+	newNode -> back = NULL;
+	if (head == NULL) {
+		head = newNode;
+	}
+	else {
+		NodeType<ItemType> *temp = last();
+		newNode -> back = temp;
+		temp -> next = newNode;
+	}
+	length++;
+        // Post :  item is added to tail of list; Former last node
+        //         is linked to this new one via double link
+}
+
+template <class ItemType>
+int DList<ItemType>::Least(int start)
+{
+	//  Pre :  list is to be sorted
+	int least;
+	NodeType<ItemType> *temp = head;
+	for (int i=0; i<start; i++)
+	{
+		temp = temp -> next;
+	}
+	least = temp -> info;
+	while(temp != NULL)
+	{
+		if (temp -> info < least)
+		{
+			least = temp -> info;
+		}
+		else
+		{
+			temp = temp -> next;
+		}
+	}
+	return least;
+        // Post :  list is sorted
+}
+
+template <class ItemType>
+int DList<ItemType>::lengthIs() const
+{
+	// Post : Function returns current length of list
+	return length;
+}
+
+template <class ItemType>
+NodeType<ItemType>* DList<ItemType>::location(ItemType item) const
+{
+	//  Pre : item to be located is passed in via parameter
+	NodeType<ItemType> *temp = head;
+	// Pre  : List is not
+	while(temp != NULL)
+	{
+		if (temp -> info == item) {
+			return temp;
+		}
+		else
+		{
+			temp = temp -> next;
+		}
+	}
+	return NULL;
+        // Post : function returns address of item being searched for --
+        //        if not found, NULL is returned
+
+}
+
+template <class ItemType>
+NodeType<ItemType>* DList<ItemType>::last() const
+{
+	// Post : Function returns location of current last item in list
+	NodeType<ItemType> *temp = head;
+	while(temp -> next != NULL)
+	{
+		temp = temp -> next;
+	}
+	return temp;
+}
+
+template <class ItemType>
+void DList<ItemType>::deleteLocation (NodeType<ItemType>* delPtr)
+{
+	//  Pre : Item to be deleted exits in list and its location
+        //        is passed in via parameter
+	if (inList(delPtr -> info)) {
+		deleteItem(delPtr -> info);
+		length--;
+	}
+
+	// Post : Location passed in is removed from list;  Length
+        //        is decremented, and location is deallocated
+
+        // Special Cases Handled for Deleting Only One Item in List,
+        // The Head Item of List, and the Tail Item of List
+}
+bash-3.2$ c++ MoveFront.cpp
+bash-3.2$ a.out
+bash: a.out: command not found
+bash-3.2$ /.a.out[K[K[K[K[K[K[K./a.out
+
+	Enter 'H' for insert head, 
+	Enter 'T' for insert tail, 
+	Enter 'P' for print list, 
+	Enter 'L' for print length, 
+	Enter 'A' for access item, 
+	Enter 'D' for erase list, 
+	Enter 'F' to look for an item, 
+	Enter 'S' to sort the list, 
+	Enter 'Q' to quit the program: 	H
+
+Enter value to insert: 6
+
+	Enter 'H' for insert head, 
+	Enter 'T' for insert tail, 
+	Enter 'P' for print list, 
+	Enter 'L' for print length, 
+	Enter 'A' for access item, 
+	Enter 'D' for erase list, 
+	Enter 'F' to look for an item, 
+	Enter 'S' to sort the list, 
+	Enter 'Q' to quit the program: 	H
+
+Enter value to insert: 3
+
+	Enter 'H' for insert head, 
+	Enter 'T' for insert tail, 
+	Enter 'P' for print list, 
+	Enter 'L' for print length, 
+	Enter 'A' for access item, 
+	Enter 'D' for erase list, 
+	Enter 'F' to look for an item, 
+	Enter 'S' to sort the list, 
+	Enter 'Q' to quit the program: 	T
+
+Enter value to insert: 2
+
+	Enter 'H' for insert head, 
+	Enter 'T' for insert tail, 
+	Enter 'P' for print list, 
+	Enter 'L' for print length, 
+	Enter 'A' for access item, 
+	Enter 'D' for erase list, 
+	Enter 'F' to look for an item, 
+	Enter 'S' to sort the list, 
+	Enter 'Q' to quit the program: 	H
+
+Enter value to insert: 18
+
+	Enter 'H' for insert head, 
+	Enter 'T' for insert tail, 
+	Enter 'P' for print list, 
+	Enter 'L' for print length, 
+	Enter 'A' for access item, 
+	Enter 'D' for erase list, 
+	Enter 'F' to look for an item, 
+	Enter 'S' to sort the list, 
+	Enter 'Q' to quit the program: 	P
+18
+3
+6
+2
+
+	Enter 'H' for insert head, 
+	Enter 'T' for insert tail, 
+	Enter 'P' for print list, 
+	Enter 'L' for print length, 
+	Enter 'A' for access item, 
+	Enter 'D' for erase list, 
+	Enter 'F' to look for an item, 
+	Enter 'S' to sort the list, 
+	Enter 'Q' to quit the program: 	S
+
+The list has been sorted
+
+	Enter 'H' for insert head, 
+	Enter 'T' for insert tail, 
+	Enter 'P' for print list, 
+	Enter 'L' for print length, 
+	Enter 'A' for access item, 
+	Enter 'D' for erase list, 
+	Enter 'F' to look for an item, 
+	Enter 'S' to sort the list, 
+	Enter 'Q' to quit the program: 	P
+2
+3
+6
+18
+
+	Enter 'H' for insert head, 
+	Enter 'T' for insert tail, 
+	Enter 'P' for print list, 
+	Enter 'L' for print length, 
+	Enter 'A' for access item, 
+	Enter 'D' for erase list, 
+	Enter 'F' to look for an item, 
+	Enter 'S' to sort the list, 
+	Enter 'Q' to quit the program: 	L
+4
+
+	Enter 'H' for insert head, 
+	Enter 'T' for insert tail, 
+	Enter 'P' for print list, 
+	Enter 'L' for print length, 
+	Enter 'A' for access item, 
+	Enter 'D' for erase list, 
+	Enter 'F' to look for an item, 
+	Enter 'S' to sort the list, 
+	Enter 'Q' to quit the program: 	F A
+
+Enter value to access: 6
+
+6 has been found, and is now the head of the list.
+
+
+	Enter 'H' for insert head, 
+	Enter 'T' for insert tail, 
+	Enter 'P' for print list, 
+	Enter 'L' for print length, 
+	Enter 'A' for access item, 
+	Enter 'D' for erase list, 
+	Enter 'F' to look for an item, 
+	Enter 'S' to sort the list, 
+	Enter 'Q' to quit the program: 	p
+6
+2
+3
+18
+
+	Enter 'H' for insert head, 
+	Enter 'T' for insert tail, 
+	Enter 'P' for print list, 
+	Enter 'L' for print length, 
+	Enter 'A' for access item, 
+	Enter 'D' for erase list, 
+	Enter 'F' to look for an item, 
+	Enter 'S' to sort the list, 
+	Enter 'Q' to quit the program: 	Q
+	Exiting Program...
+bash-3.2$ exit
+exit
+
+Script done on Thu Sep 19 23:09:11 2019

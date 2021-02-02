@@ -1,0 +1,10 @@
+/Users/nolandonley/Desktop/C++/CSC245/Project3/1SecDelay.c:8:5: error: use of undeclared identifier 'NVIC_ST_RELOAD_R'
+    NVIC_ST_RELOAD_R = numCounts - 1;
+    ^
+/Users/nolandonley/Desktop/C++/CSC245/Project3/1SecDelay.c:9:5: error: use of undeclared identifier 'NVIC_ST_CURRENT_R'
+    NVIC_ST_CURRENT_R = 0;
+    ^
+/Users/nolandonley/Desktop/C++/CSC245/Project3/1SecDelay.c:11:13: error: use of undeclared identifier 'NVIC_ST_CURRENT_R'
+    while ((NVIC_ST_CURRENT_R & 0x00010000) = 0)
+            ^
+3 errors generated.

@@ -1,0 +1,17 @@
+In file included from /Users/nolandonley/Desktop/C++/CSC245/Project1/MoveFront.cpp:3:
+In file included from /Users/nolandonley/Desktop/C++/CSC245/Project1/dlist.h:35:
+/Users/nolandonley/Desktop/C++/CSC245/Project1/dlist.cpp:76:11: error: unknown type name 'itemType'; did you mean 'ItemType'?
+        NodeType<itemType> *newNode = new NodeType<itemType>;
+                 ^~~~~~~~
+                 ItemType
+/Users/nolandonley/Desktop/C++/CSC245/Project1/dlist.cpp:72:17: note: 'ItemType' declared here
+template <class ItemType>
+                ^
+/Users/nolandonley/Desktop/C++/CSC245/Project1/dlist.cpp:76:45: error: unknown type name 'itemType'; did you mean 'ItemType'?
+        NodeType<itemType> *newNode = new NodeType<itemType>;
+                                                   ^~~~~~~~
+                                                   ItemType
+/Users/nolandonley/Desktop/C++/CSC245/Project1/dlist.cpp:72:17: note: 'ItemType' declared here
+template <class ItemType>
+                ^
+2 errors generated.

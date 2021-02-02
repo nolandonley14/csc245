@@ -1,0 +1,90 @@
+ZIP & UNZIP = non-binary, standard compression & uncompression
+              minimum program requirements
+./ZIP sample1 = creates a sample1.zip compressed file & deletes sample1
+./UNZIP sample1.zip = uncompress sample1.zip to sample1
+
+c++ -c huffman.cpp
+
+The Huffman class can be used to represent the Huffman Tree advanced data structure.
+A Huffman Tree is a full binary tree in which each leaf of the tree corresponds
+to a letter in the alphabet. An trie can be formed from this tree giving each character
+a unique binary encoding so that the file may be compressed.
+
+The Huffman class contains the following operations:
+
+    void insert(char ch, int weight);   -> inserts a character and its associated weight
+                                        into a node of the Huffman tree
+
+    bool inTree(char ch);   -> returns a boolean value indicating whether a given character
+                            is stored in the tree
+
+    int GetFrequency(char ch);	-> returns the weight of a given character
+
+    string GetCode(char ch);    -> returns the compressed code of a given
+                                character in the tree using recursion
+
+    void PrintTable();	-> displays the Huffman encoding table used in the compression process
+
+    int numNodes(); -> returns the number of nodes in the table.
+
+c++ zip.cpp huffman.o
+
+The zip is an executable file for compression that takes the source file as input from the
+command line. All of the compressed files are given a .zip extension.
+
+When using the zip executable in the command line, typing :
+
+    "--t" before the input file will print out the huffman encoding table used in the
+    compression algorithm
+
+    "--help" to get more information on the command.
+
+c++ unzip.cpp
+
+The unzip is an executable file for inflating a compressed file that takes the zipped
+filename as input from the command line. All uncompressed files remove the .zip extension.
+
+
+Example:
+
+input file:
+
+MERCER TENNIS
+
+Huffman Encoding Table
+
+Index 	Char 	Weight 	Parent 	ChildType
+0       @       1   	10     	0
+1	    _     	1      	10     	1
+2	    C     	1      	11     	0
+3	    E     	3      	16     	0
+4	    I     	1      	11     	1
+5      	M   	1  	    12     	0
+6   	N      	2      	13     	1
+7	    R     	2      	14     	0
+8	    S     	1      	12     	1
+9	    T     	1      	13     	0
+10	    T1   	2      	14     	1
+11	    T2   	2      	15     	0
+12  	T3     	2      	15     	1
+13	    T4   	3      	16     	1
+14	    T5   	4	    17   	0
+15  	T6     	4      	17     	1
+16  	T7     	6      	18     	0
+17  	T8     	8      	18     	1
+18     	T9  	14     	0      	-1
+
+Zipped up:
+
+10
+10 1010
+32 1011
+67 1100
+69 00
+73 1101
+77 1110
+78 011
+82 100
+83 1111
+84 010
+111000100110000100101101000011011110111111010

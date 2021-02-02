@@ -1,0 +1,27 @@
+[digh_a@cobra Prog3]$ ./ZIP --t tennis
+
+        ## ENCODING TABLE FOR ZIP FILE ##
+
+        Index   Char    Weight  Parent  ChildType
+
+        0       nl      1       10      0
+        1       sp      1       10      1
+        2       C       1       11      0
+        3       E       3       16      0
+        4       I       1       11      1
+        5       M       1       12      0
+        6       N       2       13      1
+        7       R       2       14      0
+        8       S       1       12      1
+        9       T       1       13      0
+        10      T1      2       14      1
+        11      T2      2       15      0
+        12      T3      2       15      1
+        13      T4      3       16      1
+        14      T5      4       17      0
+        15      T6      4       17      1
+        16      T7      6       18      0
+        17      T8      8       18      1
+        18      T9      14      0       N/A
+
+File Successfully Compressed To 45 Bits (59.82% Less).

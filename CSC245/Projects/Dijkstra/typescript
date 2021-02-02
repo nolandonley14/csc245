@@ -1,0 +1,42 @@
+Script started on Fri Dec  6 23:42:31 2019
+[?1034hbash-3.2$ c++ dijkstra.cpp
+[1mdijkstra.cpp:227:1: [0m[0;1;35mwarning: [0m[1mcontrol may reach end of non-void function [-Wreturn-type][0m
+}
+[0;1;32m^
+[0m[1mdijkstra.cpp:356:1: [0m[0;1;35mwarning: [0m[1mcontrol may reach end of non-void function [-Wreturn-type][0m
+}
+[0;1;32m^
+[0m[1mdijkstra.cpp:367:1: [0m[0;1;35mwarning: [0m[1mcontrol may reach end of non-void function [-Wreturn-type][0m
+}
+[0;1;32m^
+[0m3 warnings generated.
+bash-3.2$ ./a.out ginfile2.dat
+[H[2J~~~~~~~~~~~~~~~~~~ DIJKSTRA'S ALGORITHM ~~~~~~~~~~~~~~~~~~
+
+A Weighted Graph Has Been Built For These 7 Vectors:
+
+            V1            V2            V5
+            V4            V3            V6
+            V7
+
+ Please input your starting vertex: V1
+---------------------------------------------------------
+        Vertex          Distance         Previous
+
+            V1                 0             N/A
+            V4                 1              V1
+            V2                 2              V1
+            V5                 3              V4
+            V3                 3              V4
+            V7                 5              V4
+            V6                 6              V7
+
+---------------------------------------------------------
+ There was 2 unique cycles detected.
+
+ One cycle is: V1 -> V4 -> V3 -> V1
+
+bash-3.2$ exit
+exit
+
+Script done on Fri Dec  6 23:43:19 2019
